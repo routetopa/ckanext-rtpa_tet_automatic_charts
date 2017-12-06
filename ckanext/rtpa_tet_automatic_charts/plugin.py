@@ -7,6 +7,7 @@ from ckan.common import json
 import pandas as pd
 from pandas.io.json import json_normalize
 
+
 class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IResourceView, inherit=True)
@@ -75,6 +76,7 @@ class TableApi(BaseController):
     def get_table_data(self, resource_id ,field_id):
         ckanurl=config.get('ckan.site_url', '')
         url = ckanurl +  "/api/action/datastore_search_sql?sql=" +"SELECT \"" + field_id + "\" FROM \"" + resource_id + "\""
+        print("easdsadasdfaffasdfdassdfassdfdfsdf\n\n\n\n\n")
         print(url)
         return self.column_summary(url, field_id)
         
@@ -136,10 +138,10 @@ class TableApi(BaseController):
 				]               
 
 			results["result"]["total"] = record_count
-			response =  JsonResponse(results)
+			response =  json.dumps(results)
 			response["Access-Control-Allow-Origin"] = "*"
 
 			return response
 		except Exception as e:
-			return JsonResponse({'success': False})
+			return json.dumps({'success': False})
 
