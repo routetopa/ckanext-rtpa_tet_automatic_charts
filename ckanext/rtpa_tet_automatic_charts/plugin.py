@@ -5,6 +5,7 @@ from pylons import config
 from ckan.lib.base import BaseController
 from ckan.common import json
 import pandas as pd
+import numpy as np
 from pandas.io.json import json_normalize
 
 
@@ -74,23 +75,22 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
 class TableApi(BaseController):
 
     def get_table_data(self, resource_id ,field_id):
-        response.content_type = 'application/json; charset=UTF-8'
-	
         ckanurl=config.get('ckan.site_url', '')
-        url = ckanurl +  "/api/action/datastore_search_sql?sql=" +"SELECT \"" + field_id + "\" FROM \"" + resource_id + "\""
+        url = ckanurl +  "/api/action/datastore_search_sql?sql=" + urllib2.quote("SELECT \"" + field_id + "\" FROM \"" + resource_id + "\"")
         
-	print("easdsadasdfaffasdfdassdfassdfdfsdf\n\n\n\n\n")
+        print("easdsadasdfaffasdfdassdfassdfdfsdf\n\n\n\n\n")
         print(url)
-	
         return self.column_summary(url, field_id)
         
     def column_summary(self,url, field_id):
 		try:
-			res = urlopen(url)
-			data = json.loads(res.read().decode('utf-8'))
+			print("before")
+			print(url)
+			print(urllib2.urlopen(url).read())
+			data=json.loads(urllib2.urlopen(url).read())
+			print("after")
 			temp_data = json_normalize(data["result"]["records"])
 			fields = data["result"]["fields"] # type_unified TODO
-			print(fields)
 			record_count = 0
 			results = {
 				"help": "http://google.com",
@@ -122,6 +122,7 @@ class TableApi(BaseController):
 					}
 					results["result"]["records"].append(record)
 					record_count += 1
+			print("Response11111")
 			if f["type"] ==  "text":
 				c = f["id"]
 				counts = Counter(temp_data[c])
@@ -143,9 +144,14 @@ class TableApi(BaseController):
 
 			results["result"]["total"] = record_count
 			response =  json.dumps(results)
-			response["Access-Control-Allow-Origin"] = "*"
 
+			#response["Access-Control-Allow-Origin"] = "*"
+			#print("Response")
+			#print(response)
+			#response.content_type = 'application/json; charset=UTF-8'
 			return response
 		except Exception as e:
+			print("ERROR\n\n\n")
+			print(e)
 			return json.dumps({'success': False})
 
