@@ -3,7 +3,7 @@ import ckan.plugins.toolkit as toolkit
 import urllib2
 from pylons import config
 from ckan.lib.base import BaseController
-from ckan.common import json
+from ckan.common import json, response, request
 import pandas as pd
 import numpy as np
 from pandas.io.json import json_normalize
@@ -148,7 +148,7 @@ class TableApi(BaseController):
 			#response["Access-Control-Allow-Origin"] = "*"
 			#print("Response")
 			#print(response)
-			#response.content_type = 'application/json; charset=UTF-8'
+			response.content_type = 'application/json; charset=UTF-8'
 			return response
 		except Exception as e:
 			print("ERROR\n\n\n")
