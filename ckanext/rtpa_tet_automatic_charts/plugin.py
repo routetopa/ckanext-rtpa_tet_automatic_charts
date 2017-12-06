@@ -68,14 +68,16 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         datasetId=(data_dict['resource']['id'])
         numericColumns=self.getFields(context,data_dict)
+        ckanurl=config.get('ckan.site_url', '')
         return{'dataset_id': datasetId,
-               'resource_fields': numericColumns}
+               'resource_fields': numericColumns,
+               'ckanurl': ckanurl}
         
         
 class TableApi(BaseController):
 
     def get_table_data(self, resource_id ,field_id):
-	response.content_type = 'application/json; charset=UTF-8'
+        response.content_type = 'application/json; charset=UTF-8'
 	
         ckanurl=config.get('ckan.site_url', '')
         url = ckanurl +  "/api/action/datastore_search_sql?sql=" + urllib2.quote("SELECT \"" + field_id + "\" FROM \"" + resource_id + "\"")
