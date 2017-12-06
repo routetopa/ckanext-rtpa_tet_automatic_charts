@@ -12,3 +12,8 @@ this.ckan.module('rtpa_tet_automatic_charts_view', function(jQuery, _) {
 		
 }
 });
+$(document).ready(function(){
+
+console.log("ready");
+
+});
