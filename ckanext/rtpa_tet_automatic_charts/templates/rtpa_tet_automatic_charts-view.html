@@ -3,7 +3,7 @@
 {% block page %}
 
 
-<style>
+    <style>
             body {font-family: Verdana;}
             .node {
               border: solid 1px white;
@@ -19,10 +19,13 @@
             .tick line {stroke: white;}
             .c3-axis path {stroke: grey;}
             .c3-circle { opacity: 1 !important; }
-  </style>
-  <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/columnchart-datalet/columnchart-datalet.html" />
-  <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/datatable-datalet/datatable-datalet.html" /> 
-  <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/barchart-datalet/barchart-datalet.html" />
+    </style>
+
+    <script type="text/javascript" src="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/columnchart-datalet/columnchart-datalet.html" />
+    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/datatable-datalet/datatable-datalet.html" /> 
+    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/barchart-datalet/barchart-datalet.html" />
   
 <div>
 	{% for resource in resource_fields %}
