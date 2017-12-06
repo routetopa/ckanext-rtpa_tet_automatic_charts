@@ -33,9 +33,10 @@
 	{% for resource in resource_fields %}
 	{{resource}}
 	<columnchart-datalet data-url='{{ckanurl}}/rtpa/{{dataset_id}}/{{resource}}'
-									'selectedfields='[{"field":"XAxis","value":"Range","index":3},
-									{"field":"NumericYAxis","value":"Frequency","index":1},null,null] 
-									filters=[] aggregators=[] orders=[] x-axis-label="Range of values in the field {{resource}} "
+									selectedfields='[
+										{"field":"XAxis","value":"Range","index":3},
+										{"field":"NumericYAxis","value":"Frequency","index":1},null,null] 
+										filters=[] aggregators=[] orders=[] x-axis-label="Range of values in the field {{resource}} "
 									y-axis-label='Frequency' suffix='' legend='topRight' data-labels='true' stack='false' 
 									theme='themeBase' fields=["Frequency","Name","Range"]></columnchart-datalet>
 	
