@@ -75,6 +75,8 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
 class TableApi(BaseController):
 
     def get_table_data(self, resource_id ,field_id):
+	response.content_type = 'application/json; charset=UTF-8'
+	
         ckanurl=config.get('ckan.site_url', '')
         url = ckanurl +  "/api/action/datastore_search_sql?sql=" + urllib2.quote("SELECT \"" + field_id + "\" FROM \"" + resource_id + "\"")
         
@@ -143,13 +145,14 @@ class TableApi(BaseController):
 				]               
 
 			results["result"]["total"] = record_count
-			response =  json.dumps(results)
+			json_response =  json.dumps(results)
 
 			#response["Access-Control-Allow-Origin"] = "*"
 			#print("Response")
 			#print(response)
-			response.content_type = 'application/json; charset=UTF-8'
-			return response
+
+			return json_response
+
 		except Exception as e:
 			print("ERROR\n\n\n")
 			print(e)
