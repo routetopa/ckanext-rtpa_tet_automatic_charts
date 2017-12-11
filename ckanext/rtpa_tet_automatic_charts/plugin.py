@@ -31,7 +31,6 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
     def after_map(m):
          m.connect('get_table_data', '/rtpa/{resource_id}/{field_id}',
             controller='ckanext.rtpa_tet_automatic_charts.plugin:TableApi', action='get_table_data')
-         print(m)
          return m
          
          
@@ -49,7 +48,26 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
 		datadownloadurl=ckanurl+'/api/3/action/datastore_search?resource_id='+datasetId
 		return datadownloadurl
     
-    
+
+    def getDataFrequency(self,context, data_dict):
+		url=self.getResourceURL(context,data_dict)
+		data=json.loads(urllib2.urlopen(url).read())
+		Dataframe=pd.read_json(json.dumps(data['result']['records']))
+		NumericDataframe=Dataframe.select_dtypes(exclude=['object'])
+		DataforC3=[]
+		for numericColumn in NumericDataframe:
+			DataperColumnC3=[]
+			tempcolumn=NumericDataframe[numericColumn]
+			distribution=np.histogram(tempcolumn,11)
+			valueFromValueToData=[]
+			valueRanges=distribution[1].tolist()
+			for i in range(0,11):
+				valueFromValueToData.append(str(round(valueRanges[i]))+" to "+str(round(valueRanges[i+1])))
+			DataperColumnC3.append([numericColumn,distribution[0].tolist(),valueFromValueToData])
+			DataforC3.append(DataperColumnC3)
+		return DataforC3
+
+
     def info(self):
 		return { 
 				'name': 'rtpa_tet_automatic_charts',
@@ -69,7 +87,9 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
         datasetId=(data_dict['resource']['id'])
         numericColumns=self.getFields(context,data_dict)
         ckanurl=config.get('ckan.site_url', '')
-        return{'dataset_id': datasetId,
+        DataC3=self.getDataFrequency(context, data_dict)
+        return{'dataforc3': json.dumps(DataC3),
+               'dataset_id': datasetId,
                'resource_fields': numericColumns,
                'ckanurl': ckanurl}
         
@@ -82,17 +102,11 @@ class TableApi(BaseController):
         ckanurl=config.get('ckan.site_url', '')
         url = ckanurl +  "/api/action/datastore_search_sql?sql=" + urllib2.quote("SELECT \"" + field_id + "\" FROM \"" + resource_id + "\"")
         
-        print("easdsadasdfaffasdfdassdfassdfdfsdf\n\n\n\n\n")
-        print(url)
         return self.column_summary(url, field_id)
         
     def column_summary(self,url, field_id):
 		try:
-			print("before")
-			print(url)
-			print(urllib2.urlopen(url).read())
 			data=json.loads(urllib2.urlopen(url).read())
-			print("after")
 			temp_data = json_normalize(data["result"]["records"])
 			fields = data["result"]["fields"] # type_unified TODO
 			record_count = 0
@@ -126,7 +140,6 @@ class TableApi(BaseController):
 					}
 					results["result"]["records"].append(record)
 					record_count += 1
-			print("Response11111")
 			if f["type"] ==  "text":
 				c = f["id"]
 				counts = Counter(temp_data[c])
