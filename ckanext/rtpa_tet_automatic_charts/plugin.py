@@ -4,6 +4,7 @@ import urllib2
 from pylons import config
 from ckan.lib.base import BaseController
 from ckan.common import json, response, request
+from ckan.common import config as cf 
 import pandas as pd
 import numpy as np
 from pandas.io.json import json_normalize
@@ -84,6 +85,8 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
         return True
         
     def setup_template_variables(self, context, data_dict):
+        chartsconfig = cf.get(
+        'ckan.extensions.rtpa_tet_automatic_charts.use_datalets', False)
         datasetId=(data_dict['resource']['id'])
         numericColumns=self.getFields(context,data_dict)
         ckanurl=config.get('ckan.site_url', '')
@@ -91,7 +94,8 @@ class Rtpa_Tet_Automatic_ChartsPlugin(plugins.SingletonPlugin):
         return{'dataforc3': json.dumps(DataC3),
                'dataset_id': datasetId,
                'resource_fields': numericColumns,
-               'ckanurl': ckanurl}
+               'ckanurl': ckanurl,
+               'chartsconfigflag': chartsconfig}
         
         
 class TableApi(BaseController):
