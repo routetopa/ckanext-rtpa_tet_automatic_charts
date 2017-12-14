@@ -135,6 +135,7 @@ class TableApi(BaseController):
 			if f["type"] ==  "numeric":
 				c = f["id"]
 				temp_data[c] = pd.to_numeric(temp_data[c], errors='coerce')
+				#print(temp_data)
 				dist = np.histogram(temp_data[c],11)
 				for i in range (0, 11):
 					record = {
@@ -164,11 +165,13 @@ class TableApi(BaseController):
 				]               
 
 			results["result"]["total"] = record_count
+			results["Access-Control-Allow-Origin"]="*"
 			json_response =  json.dumps(results)
+			
 
-			#response["Access-Control-Allow-Origin"] = "*"
+			#json_response["Access-Control-Allow-Origin"] = "*"
 			#print("Response")
-			#print(response)
+			#print(json_response)
 
 			return json_response
 

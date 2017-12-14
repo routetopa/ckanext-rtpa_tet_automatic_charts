@@ -1,12 +1,12 @@
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.3/highcharts.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="http://deep.routetopa.eu/deep/COMPONENTS/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
 
-    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/columnchart-datalet/columnchart-datalet.html" />
-    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/datatable-datalet/datatable-datalet.html" /> 
-    <link rel="import" href="http://deep.routetopa.eu/deep_1_9_rev/COMPONENTS/datalets/barchart-datalet/barchart-datalet.html" />
+    <link rel="import" href="http://deep.routetopa.eu/deep/COMPONENTS/datalets/columnchart-datalet/columnchart-datalet.html" />
+    <link rel="import" href="http://deep.routetopa.eu/deep/COMPONENTS/datalets/datatable-datalet/datatable-datalet.html" /> 
+    <link rel="import" href="http://deep.routetopa.eu/deep/COMPONENTS/datalets/barchart-datalet/barchart-datalet.html" />
  
 
 
@@ -14,16 +14,16 @@
 
  	{{resource}}
  	<columnchart-datalet data-url='{{ckanurl}}/rtpa/{{dataset_id}}/{{resource}}'
- 				selectedfields='[
- 						{"field":"XAxis","value":"Range","index":3},
- 						{"field":"NumericYAxis","value":"Frequency","index":1},null,null]'
+ 				fields='[
+ 					{"field":"XAxis","value":"Range","index":3},
+ 					{"field":"NumericYAxis","value":"Frequency","index":1},null,null]'
  				filters='[]'
 				aggregators='[]'
 				orders='[]'
- 				x-axis-label="Range of values in the field {{resource}}"
+ 				x-axis-label='Range of values in the field {{resource}}'
 				y-axis-label='Frequency' suffix='' legend='topRight' 
 				data-labels='true' stack='false' 
- 				theme='themeBase' fields=["Frequency","Name","Range"]></columnchart-datalet>
+ 				theme='themeBase' datalettitle='{{resource}}' fields=["Frequency","Name","Range"]></columnchart-datalet>
  	
 
 {%endfor%}
