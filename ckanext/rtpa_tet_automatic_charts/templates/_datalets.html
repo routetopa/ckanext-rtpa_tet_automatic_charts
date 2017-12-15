@@ -1,6 +1,7 @@
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/highcharts.src.js"></script>
+
     <script type="text/javascript" src="http://deep.routetopa.eu/deep/COMPONENTS/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
 
@@ -14,16 +15,27 @@
 
  	{{resource}}
  	<columnchart-datalet data-url='{{ckanurl}}/rtpa/{{dataset_id}}/{{resource}}'
- 				fields='[
- 					{"field":"XAxis","value":"Range","index":3},
- 					{"field":"NumericYAxis","value":"Frequency","index":1},null,null]'
+ 				selectedfields='[
+						    {"field":"XAxis","value":"Range","index":3},
+						    {"field":"NumericYAxis","value":"Frequency","index":1},null,null
+						]'
  				filters='[]'
 				aggregators='[]'
 				orders='[]'
  				x-axis-label='Range of values in the field {{resource}}'
 				y-axis-label='Frequency' suffix='' legend='topRight' 
 				data-labels='true' stack='false' 
- 				theme='themeBase' datalettitle='{{resource}}' fields=["Frequency","Name","Range"]></columnchart-datalet>
+ 				theme='themeBase' datalettitle='{{resource}}' fields='["Frequency","Name","Range"]'></columnchart-datalet>
  	
 
 {%endfor%}
+<!--
+<script type="text/javascript" src="http://deep.routetopa.eu/deep/COMPONENTS/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- REMOVE THE PREVIOUS SCRIPT TAGS IF YOUR PAGE ALREADY USES JQUERY AND POLYFILL LIBRARIES  -->
+<link rel="import" href="http://deep.routetopa.eu/deep/COMPONENTS/datalets/columnchart-datalet/columnchart-datalet.html" /> 
+
+
+<columnchart-datalet data-url='http://ckan.routetopa.eu/api/3/action/datastore_search?resource_id=4cfe1025-7b80-4869-9901-bc550e0f1881&limit=99999' 
+selectedfields='[{"field":"XAxis","value":"Lat","index":1},{"field":"NumericYAxis","value":"Lon","index":2},null,null]' filters='[]' aggregators='[]' orders='[]' x-axis-label='' y-axis-label='' suffix='' legend='topRight' data-labels='true' stack='false' theme='themeBase' datalettitle='AAA' 
+description='' fields='["Lat","Lon","Name"]'></columnchart-datalet>-->
